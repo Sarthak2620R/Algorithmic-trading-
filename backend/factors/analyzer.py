@@ -18,5 +18,38 @@ def volatiliy(db_name,table_name):
         except Exception as e:
             print(f"error:{e}")
         time.sleep(interval)
+
+def sma_20(db_name ,table_name):
+    while True:
+        try:
+            query=f'SELECT CLOSE FROM {table_name} ORDER BY rowid DESC LIMIT 20'
+            conn=sqlite3.connect(db_name)
+            df=pd.read_sql(query,conn)
+            sma=df.mean()
+        except Exception as e:
+            print(f"error:{e}")
+        time.sleep(interval)
+
+def bollinger_u_downp(db_name,table_name):
+    while True:
+        try:
+            avg=sma_20(db_name,table_name)
+            gap=volatiliy(db_name,table_name)
+            bollinger_up=avg+2*gap
+            bollinger_down=avg-2*volatiliy
+            return bollinger_up,bollinger_down
+        except Exception as e:
+            print(f"error:{e}")
+        time.sleep(interval)
+
+def ema_20(db_name,table_name):
+    while True:
+        try:
+            multiplier=2/21
+        except Exception as e:
+            print(f"error:{e}")
         
 
+
+
+        
