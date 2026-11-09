@@ -37,6 +37,7 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
+    
 def database_for_factors():
     conn=sqlite3.connect(db_name)
     cursor=conn.cursor()
